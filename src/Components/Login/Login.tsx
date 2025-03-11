@@ -32,10 +32,11 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </div>
+        </div> ̰
         <button type="submit">Login</button>
+        <p>Log In now to get 5% off</p> 
       </form>
-    </div>
+    </div> 
   );
 };
 
