@@ -5,7 +5,7 @@ const Login = () => {
 
   return (
     <div>
-      <Button>Login</Button>
+      <Button>Mode</Button>
     </div> 
   );
 };
