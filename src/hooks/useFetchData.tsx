@@ -15,9 +15,7 @@ const useFetchData = <T,>(endpoint: string): FetchDataResult<T> => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/${endpoint}`
-        );
+        const response = await fetch(`${apiUrl}/${endpoint}`);
         const result: T = await response.json();
         setData(result);
       } catch (err) {
