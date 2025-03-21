@@ -6,15 +6,18 @@ interface FetchDataResult<T> {
   error: Error | null;
 }
 
-const useFetchData = <T,>(url: string): FetchDataResult<T> => {
+const useFetchData = <T,>(endpoint: string): FetchDataResult<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/${endpoint}`
+        );
         const result: T = await response.json();
         setData(result);
       } catch (err) {
@@ -29,7 +32,7 @@ const useFetchData = <T,>(url: string): FetchDataResult<T> => {
     };
 
     fetchData();
-  }, [url]);
+  }, [endpoint]);
 
   return { data, loading, error };
 };
