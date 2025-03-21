@@ -21,6 +21,9 @@ import { SaltProvider } from "@salt-ds/core";
 
 // Import theme CSS
 import "@salt-ds/theme/index.css";
+// Import ag-grid CSS
+// import "ag-grid-community/styles/ag-grid.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
