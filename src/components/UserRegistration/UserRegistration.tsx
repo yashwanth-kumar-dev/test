@@ -59,7 +59,6 @@ const UserRegistration: React.FC = () => {
   const [sameAsPresent, setSameAsPresent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [apiData, setApiData] = useState<any>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { dataset, value } = e.target;
@@ -153,19 +152,12 @@ const UserRegistration: React.FC = () => {
     dispatch({ type: "reset" });
   };
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((json) => setApiData(json));
-  }, []);
-
   return (
     <StackLayout className="userregistration__StackLayout">
       <FlexLayout align="center" justify="center">
         <h1>User Registration</h1>
       </FlexLayout>
       <DividerComponent orientation="horizontal" variant="primary" />
-      {/* {apiData && apiData.map((item: any) => <div>{item.title}</div>)} */}
       {!submitted ? (
         <>
           <SteppedTracker>

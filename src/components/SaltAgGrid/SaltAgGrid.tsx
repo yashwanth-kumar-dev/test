@@ -7,11 +7,11 @@ import {
 } from "ag-grid-community";
 import "./SaltAgGrid.scss";
 import useFetchData from "../../hooks/useFetchData";
-import { GridData } from "../../interfaces/gridInterfaces";
 import { useAgGridHelpers } from "../../hooks/useAgGridHelpers";
 import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { defaultColumns } from "../../data/defaultColumns";
+import { rowData } from "../../interfaces/gridInterfaces";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -19,9 +19,7 @@ const SaltAgGrid = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
   const [selected, setSelected] = useState("primary");
 
-  const { data, loading, error } = useFetchData<GridData>(
-    "http://localhost:3001/gridData"
-  );
+  const { data, loading, error } = useFetchData<rowData[]>("userData");
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
@@ -48,7 +46,7 @@ const SaltAgGrid = () => {
           <AgGridReact
             {...agGridProps}
             columnDefs={defaultColumns}
-            rowData={data.rowData}
+            rowData={data}
             rowSelection="multiple"
             pagination={true}
             paginationPageSize={100}
