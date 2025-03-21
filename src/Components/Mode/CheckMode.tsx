@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Card, SaltProvider, StackLayout, useTheme } from "@salt-ds/core";
+import { Card, SaltProvider, StackLayout } from "@salt-ds/core";
 import "./CheckMode.scss";
 
 

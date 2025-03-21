@@ -1,0 +1,28 @@
+header {
+  position: relative;
+  width: 100%;
+  color: white;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  .header_flexLayout {
+    background-color: rgba(22, 22, 22);
+    height: 60px;
+    padding: 0 20px;
+  }
+
+  .company-label {
+    font-size: 1.5rem;
+    color: white;
+  }
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(22, 22, 22);
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
