@@ -28,7 +28,7 @@ const DrawerComponent = () => {
   };
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open Right Drawer</Button>{" "}
+      <Button onClick={handleRequestOpen}>Drawer</Button>{" "}
       <Drawer
         open={open}
         onOpenChange={onOpenChange}

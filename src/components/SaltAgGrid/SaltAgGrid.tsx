@@ -1,10 +1,8 @@
-import React, { useState, type SyntheticEvent, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
-import {
-  AllCommunityModule,
-  ModuleRegistry,
-  GetRowIdParams,
-} from "ag-grid-community";
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import "./SaltAgGrid.scss";
 import useFetchData from "../../hooks/useFetchData";
 import { useAgGridHelpers } from "../../hooks/useAgGridHelpers";
@@ -18,14 +16,31 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 const SaltAgGrid = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
   const [selected, setSelected] = useState("primary");
+  const [page, setPage] = useState(1);
+  const { data, loading, error } = useFetchData<rowData[]>("userData", page);
 
-  const { data, loading, error } = useFetchData<rowData[]>("userData");
-
-  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const onChange = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
   };
 
-  if (loading) return <div>Loading...</div>;
+  const onPaginationChanged = useCallback(
+    (params: {
+      api: {
+        paginationGetCurrentPage: () => number;
+        paginationGetTotalPages: () => any;
+      };
+    }) => {
+      if (
+        params.api.paginationGetCurrentPage() + 1 ===
+        params.api.paginationGetTotalPages()
+      ) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    },
+    []
+  );
+
+  if (loading && page === 1) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -50,6 +65,7 @@ const SaltAgGrid = () => {
             rowSelection="multiple"
             pagination={true}
             paginationPageSize={100}
+            onPaginationChanged={onPaginationChanged}
           />
         )}
       </div>
