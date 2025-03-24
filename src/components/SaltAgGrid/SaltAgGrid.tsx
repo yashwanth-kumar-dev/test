@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
@@ -10,6 +10,7 @@ import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { defaultColumns } from "../../data/defaultColumns";
 import { rowData } from "../../interfaces/gridInterfaces";
+import Spinner from "../Common/Spinner/Spinner";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -17,7 +18,10 @@ const SaltAgGrid = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
   const [selected, setSelected] = useState("primary");
   const [page, setPage] = useState(1);
-  const { data, loading, error } = useFetchData<rowData[]>("userData", page);
+  const { data, loading, error, hasMore } = useFetchData<rowData[]>(
+    "userData",
+    page
+  );
 
   const onChange = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
@@ -31,16 +35,17 @@ const SaltAgGrid = () => {
       };
     }) => {
       if (
+        hasMore &&
         params.api.paginationGetCurrentPage() + 1 ===
-        params.api.paginationGetTotalPages()
+          params.api.paginationGetTotalPages()
       ) {
         setPage((prevPage) => prevPage + 1);
       }
     },
-    []
+    [hasMore]
   );
 
-  if (loading && page === 1) return <div>Loading...</div>;
+  if (loading && page === 1) return <Spinner />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -57,6 +62,7 @@ const SaltAgGrid = () => {
           "ag-theme-salt-variant-zebra": selected === "zebra",
         })}
       >
+        {loading && page > 1 && <Spinner />}
         {data && (
           <AgGridReact
             {...agGridProps}
