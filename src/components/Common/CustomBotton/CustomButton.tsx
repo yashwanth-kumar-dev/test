@@ -6,6 +6,7 @@ interface CustomButtonProps {
   appearance: "solid" | "outline" | "ghost";
   sentiment: "accented" | "neutral" | "positive" | "negative";
   children: React.ReactNode;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
